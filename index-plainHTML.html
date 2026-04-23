@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Evento - HTML Plano</title>
+    <style>
+        body { font-family: Arial, sans-serif; margin: 20px; background-color: #f4f7f6; }
+        .container { border: 1px solid #ccc; padding: 20px; width: 400px; margin-bottom: 20px; background: white; border-radius: 8px; }
+        .form-group { margin-bottom: 12px; }
+        label { display: inline-block; width: 130px; font-weight: bold; }
+        input, select { width: 240px; padding: 5px; box-sizing: border-box; }
+        button { padding: 8px 15px; cursor: pointer; margin-top: 10px; }
+        hr { border: 0; border-top: 1px solid #ddd; margin: 15px 0; }
+    </style>
+</head>
+<body>
+    <section id="app-body" class="container">
+        <h2>Gestión de Evento (Plano)</h2>
+        <button id="main_btNuevoAsistente">Nuevo Asistente</button>
+        <hr>
+        <h3>Resultados:</h3>
+        <p>Total Asistentes: <strong id="lblTotalAsistentes">0</strong></p>
+        <p>Total Recaudado: $<strong id="lblTotalRecaudado">0.00</strong></p>
+        <p>Porcentaje Menores: <strong id="lblPorcMenores">0.00</strong>%</p>
+        <p>Porcentaje Mayores: <strong id="lblPorcMayores">0.00</strong>%</p>
+        <p>Porcentaje Regular: <strong id="lblPorcRegular">0.00</strong>%</p>
+        <p>Porcentaje VIP: <strong id="lblPorcVIP">0.00</strong>%</p>
+    </section>
+
+    <section id="modal-asistente" class="container" hidden>
+        <h3>Datos del Asistente</h3>
+        
+        <div class="form-group"><label>Nombre:</label><input type="text" id="inNombre"></div>
+        <div class="form-group"><label>Apellido:</label><input type="text" id="inApellido"></div>
+        <div class="form-group"><label>Cédula:</label><input type="number" id="inCedula"></div>
+        <div class="form-group"><label>Edad:</label><input type="number" id="inEdad"></div>
+        <div class="form-group"><label>Fecha Nac.:</label><input type="date" id="inFechaNac"></div>
+        
+        <div class="form-group">
+            <label>Sexo:</label>
+            <select id="inSexo">
+                <option value="M">Masculino</option>
+                <option value="F">Femenino</option>
+            </select>
+        </div>
+        
+        <div class="form-group">
+            <label>Entrada:</label>
+            <select id="inTipo">
+                <option value="1">Regular</option>
+                <option value="2">VIP</option>
+            </select>
+        </div>
+        
+        <div class="form-group">
+            <label>¿Es Estudiante?:</label>
+            <select id="inEstudiante">
+                <option value="S">Sí</option>
+                <option value="N">No</option>
+            </select>
+        </div>
+        
+        <div style="text-align: right;">
+            <button id="btCancelar" style="background: #dc3545; color: white; border: none;">Cancelar</button>
+            <button id="btAceptar" style="background: #28a745; color: white; border: none;">Aceptar</button>
+        </div>
+    </section>
+
+    <script type="module">
+        import Cl_cEvento from "./dist/controllers/Cl_cEvento.js";
+        import Cl_cAsistente from "./dist/controllers/Cl_cAsistente.js";
+        import Cl_vEventoPlain from "./dist/views/Cl_vEventoPlain.js";
+        import Cl_vAsistentePlain from "./dist/views/Cl_vAsistentePlain.js";
+
+        const vistaEvento = new Cl_vEventoPlain();
+        const vistaAsistente = new Cl_vAsistentePlain();
+        
+        const controladorAsistente = new Cl_cAsistente(vistaAsistente);
+        new Cl_cEvento(vistaEvento, controladorAsistente);
+    </script>
+</body>
+</html>

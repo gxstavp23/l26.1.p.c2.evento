@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Evento - Bootstrap</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+</head>
+<body class="bg-light">
+    
+    <div class="container mt-5" style="max-width: 600px;">
+        <div class="card shadow">
+            <div class="card-header bg-primary text-white d-flex justify-content-between align-items-center">
+                <h4 class="mb-0">Gestión de Evento (Bootstrap)</h4>
+                <button id="main_btNuevoAsistente" class="btn btn-light btn-sm fw-bold">Nuevo Asistente</button>
+            </div>
+            <div class="card-body">
+                <div class="row text-center g-3">
+                    <div class="col-6">
+                        <div class="p-3 border rounded bg-white">
+                            <h6 class="text-muted">Total Asistentes</h6>
+                            <span id="lblTotalAsistentes" class="badge bg-secondary fs-5">0</span>
+                        </div>
+                    </div>
+                    <div class="col-6">
+                        <div class="p-3 border rounded bg-white">
+                            <h6 class="text-muted">Total Recaudado</h6>
+                            <span class="fs-5 fw-bold text-success">$<span id="lblTotalRecaudado">0.00</span></span>
+                        </div>
+                    </div>
+                    <div class="col-6">
+                        <div class="p-2 border rounded bg-white">
+                            <h6 class="text-muted mb-1">% Menores</h6>
+                            <span id="lblPorcMenores" class="text-primary fw-bold fs-5">0.00</span>%
+                        </div>
+                    </div>
+                    <div class="col-6">
+                        <div class="p-2 border rounded bg-white">
+                            <h6 class="text-muted mb-1">% Mayores</h6>
+                            <span id="lblPorcMayores" class="text-primary fw-bold fs-5">0.00</span>%
+                        </div>
+                    </div>
+                    <div class="col-6">
+                        <div class="p-2 border rounded bg-white">
+                            <h6 class="text-muted mb-1">% Regular</h6>
+                            <span id="lblPorcRegular" class="text-info fw-bold fs-5">0.00</span>%
+                        </div>
+                    </div>
+                    <div class="col-6">
+                        <div class="p-2 border rounded bg-white">
+                            <h6 class="text-muted mb-1">% VIP</h6>
+                            <span id="lblPorcVIP" class="text-warning fw-bold fs-5">0.00</span>%
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="modal fade" id="modal-asistente" tabindex="-1" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header bg-dark text-white">
+                    <h5 class="modal-title">Datos del Asistente</h5>
+                </div>
+                <div class="modal-body">
+                    <div class="row g-2">
+                        <div class="col-md-6">
+                            <label class="form-label small mb-0">Nombre:</label>
+                            <input type="text" id="inNombre" class="form-control">
+                        </div>
+                        <div class="col-md-6">
+                            <label class="form-label small mb-0">Apellido:</label>
+                            <input type="text" id="inApellido" class="form-control">
+                        </div>
+                        <div class="col-md-6">
+                            <label class="form-label small mb-0">Cédula:</label>
+                            <input type="number" id="inCedula" class="form-control">
+                        </div>
+                        <div class="col-md-6">
+                            <label class="form-label small mb-0">Edad:</label>
+                            <input type="number" id="inEdad" class="form-control">
+                        </div>
+                        <div class="col-md-12">
+                            <label class="form-label small mb-0">Fecha de Nacimiento:</label>
+                            <input type="date" id="inFechaNac" class="form-control">
+                        </div>
+                        <div class="col-md-4">
+                            <label class="form-label small mb-0">Sexo:</label>
+                            <select id="inSexo" class="form-select">
+                                <option value="M">Masculino</option>
+                                <option value="F">Femenino</option>
+                            </select>
+                        </div>
+                        <div class="col-md-4">
+                            <label class="form-label small mb-0">Entrada:</label>
+                            <select id="inTipo" class="form-select">
+                                <option value="1">Regular</option>
+                                <option value="2">VIP</option>
+                            </select>
+                        </div>
+                        <div class="col-md-4">
+                            <label class="form-label small mb-0">Estudiante:</label>
+                            <select id="inEstudiante" class="form-select">
+                                <option value="S">Sí</option>
+                                <option value="N">No</option>
+                            </select>
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button id="btCancelar" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
+                    <button id="btAceptar" class="btn btn-primary">Aceptar</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    
+    <script type="module">
+        import Cl_cEvento from "./dist/controllers/Cl_cEvento.js";
+        import Cl_cAsistente from "./dist/controllers/Cl_cAsistente.js";
+        import Cl_vEventoBootstrap from "./dist/views/Cl_vEventoBootstrap.js";
+        import Cl_vAsistenteBootstrap from "./dist/views/Cl_vAsistenteBootstrap.js";
+
+        const vistaEvento = new Cl_vEventoBootstrap();
+        const vistaAsistente = new Cl_vAsistenteBootstrap();
+        
+        const controladorAsistente = new Cl_cAsistente(vistaAsistente);
+        new Cl_cEvento(vistaEvento, controladorAsistente);
+    </script>
+</body>
+</html>
